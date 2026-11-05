@@ -5,28 +5,43 @@
 				<th scope="col">#</th>
 				<th scope="col">Track</th>
 				<th scope="col">Duration</th>
-				<!--TODO: Use @if to hide if hideArtist is true-->
-				<th scope="col">Primary Artist</th>
-				<!--TODO: Use @if to hide if hideAlbum is true-->
-				<th scope="col">Album</th>
+				@if(!hideArtist) {
+					<!--TODO: Use @if to hide if hideArtist is true-->
+					<th scope="col">Primary Artist</th>
+				}
+					
+				@if(!hideAlbum) {
+					<!--TODO: Use @if to hide if hideAlbum is true-->
+					<th scope="col">Album</th>
+				}
 			</tr>
 		</thead>
 		<tbody>
-			<!--TODO: Use @for to loop over tracks-->
-			<tr>
-				<!--TODO: Populate with row index (start with 1!)-->
-				<td>???</td>
-				<td>
-					<!--TODO: link to the endpoint for that track, display the track's name-->
-					<a>???</a>
-				</td>
-				<!--TODO: display the track's duration-->
-				<td>???</td>
-				<!--TODO: Use @if to hide if hideArtist is true; link to the first artist's endpoint and display the first artist's name-->
-				<td><a></a></td>
-				<!--TODO: Use @if to hide if hideAlbum is true; link to the album's endpoint and display the album's name-->
-				<td><a></a></td>
-			</tr>
+			<!--TODO: Use @for to loop over tracks...   >:]-->
+			@for(track of tracks; track track; let idx = $index; let first = $first) {
+				<tr>
+					<!--TODO: Populate with row index (start with 1!)-->
+					<td>{{idx + 1}}</td>
+					<td>
+						<!-- THIS HERE NEEDS TO BE FIXED FFFFFFFFFFFFFFAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH -->
+						<!--TODO: link to the endpoint for that track, display the track's name-->
+						<a [href]="'/' + 'track' + '/' + track.id">{{track.name}}</a>
+					</td>
+					<!--TODO: display the track's duration-->
+					<td>{{track.durationStr}}</td>
+					<!--TODO: Use @if to hide if hideArtist is true; link to the first artist's endpoint and display the first artist's name-->
+					@if(!hideArtist) {
+						<td><a [href]="'/' + 'artist' + '/' + track.artists[0].id">{{track.artists[0].name}}</a></td>
+						
+					}
+						
+					<!--TODO: Use @if to hide if hideAlbum is true; link to the album's endpoint and display the album's name-->
+					@if(!hideAlbum) {
+						<td><a [href]="'/' + 'album' + '/' + track.album.id">{{track.album.name}}</a></td>
+					}
+		
+				</tr>
+			}
 		</tbody>
 	</table>
 }

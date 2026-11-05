@@ -1,12 +1,31 @@
 <h1>Search Spotify</h1>
 <!--TODO: bind input's model to searchString-->
-<input>
+<input [(ngModel)]="searchString" (keyup.enter)="search()">
 <!--TODO: bind select's model to searchCategory-->
-<select>
-	<!--TODO: loop over searchCategories to create dropdown options-->
+<select [(ngModel)]="searchCategory" (change)="search()">
+	@for(category of searchCategories; track category){
+		<option [value]="category">{{category}}</option>
+	}
 	<!--populate body and text value https://www.w3schools.com/tags/att_option_selected.asp-->
 </select>
 <!--TODO: Call search function when the button is clicked-->
-<button class="btn btn-light">Search</button>
+<button (click)="search()" class="btn btn-light">Search</button>
 <!--TODO: Display a carousel component if searching for an artist or album. Bind carousel's resources and give it a static carouselId.-->
-<!--TODO: Display a track-list component if searching for a track. Bind track-list's tracks.-->
+@if(resources){
+	@if(searchCategory === "track") {
+		<!--TODO: Display a track-list component if searching for a track. Bind track-list's tracks.-->
+		 <app-track-list [tracks]="resources"></app-track-list>
+	}
+	@else {
+		<!-- this is the artist or album section -->
+		<app-carousel [resources]="resources" [carouselId]="staticFAH"></app-carousel>
+	}
+}
+
+	
+	
+
+
+
+
+

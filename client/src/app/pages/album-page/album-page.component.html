@@ -2,23 +2,28 @@
 	<div class="row">
 		<div class="col-12 col-sm-6">
 			<!--TODO: populate with album name-->
-			<h1>???</h1>
+			<h1>{{album.name}}</h1>
 			<!--TODO: set src to album image URL-->
-			<img id="albumImg">
+			<img [src]="album.imageURL" id="albumImg">
 			<!--TODO: add thermometer with album's popularity -->
+			<app-thermometer [popularity]="album.popularity"></app-thermometer>
 			<!--TODO: use @for to loop over album artists-->
+			@for(artist of album.artists; track artist; let idx = $index) {
 			<p>
 				<!--TODO: link to artist page, display artist name-->
-				Artist: <a>???</a>
+				Artist: <a [href]="'/'+ 'artist' + '/' + album.artists[idx].id">{{album.artists[idx].name}}</a>
 			</p>
+			}
+			
 			<p>
 				<!--TODO: link to album page on spotify, display album name-->
-				<a class="btn btn-light" role="button" target="_blank" >Open ??? on Spotify</a>
+				<a [href]="album.url" class="btn btn-light" role="button" target="_blank" >Open {{album.name}} on Spotify</a>
 			</p>
 		</div>
 		<div class="col-12 col-sm-6">
 			<h3>Album Tracks</h3>
 			<!--TODO: display the track list for the album. Hide the artist and album columns because they are redundant on this page.-->
+			<app-track-list [hideAlbum]="true" [hideArtist]="true" [tracks]="tracks"></app-track-list>
 		</div>
 	</div>
 }
